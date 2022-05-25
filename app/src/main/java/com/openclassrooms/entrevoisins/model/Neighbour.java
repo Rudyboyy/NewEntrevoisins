@@ -1,11 +1,12 @@
 package com.openclassrooms.entrevoisins.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class Neighbour implements Serializable {
 
     /** Identifier */
     private long id;
@@ -25,6 +26,8 @@ public class Neighbour {
     /** About me */
     private String aboutMe;
 
+    private boolean isFavorite;
+
     /**
      * Constructor
      * @param id
@@ -32,13 +35,14 @@ public class Neighbour {
      * @param avatarUrl
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe) {
+                     String phoneNumber, String aboutMe, boolean isFavorite) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 
     public long getId() {
@@ -89,6 +93,14 @@ public class Neighbour {
         this.aboutMe = aboutMe;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,5 +112,17 @@ public class Neighbour {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Neighbour{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
+                '}';
     }
 }
