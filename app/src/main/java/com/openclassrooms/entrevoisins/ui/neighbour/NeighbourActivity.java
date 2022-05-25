@@ -3,9 +3,9 @@ package com.openclassrooms.entrevoisins.ui.neighbour;
 import static com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity.NEIGHBOURS_INFO;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +18,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NeighbourActivity extends AppCompatActivity {
 
@@ -52,25 +53,13 @@ public class NeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mApiService = DI.getNeighbourApiService();
 
-        myNeighbour = (Neighbour) getIntent().getSerializableExtra(NEIGHBOURS_INFO);
-        Glide.with(this).load(myNeighbour.getAvatarUrl()).into(avatar);
-        nom1.setText(myNeighbour.getName());
-        nom2.setText(myNeighbour.getName());
-        adress.setText(myNeighbour.getAddress());
-        phoneNumber.setText(myNeighbour.getPhoneNumber());
-        aboutMe.setText(myNeighbour.getAboutMe());
-        socialNetwork.setText(getString(R.string.facebook_profile_url, myNeighbour.getName().toLowerCase()));
+        setMyNeighbour();
 
         backButton.setOnClickListener(view -> this.finish());
-
-        favoriteButton.setOnClickListener(view -> {
-            mApiService.toggleIsNeighbourFavorite(myNeighbour);
-            myNeighbour = mApiService.getNeighbourById(myNeighbour.getId());
-            setNeighbourIsFavorite(myNeighbour);
-        });
     }
 
-    public void setNeighbourIsFavorite(@NonNull Neighbour myNeighbour) {
+    public void setNeighbourIsFavorite(Neighbour myNeighbour) {
+        if (myNeighbour == null) return;
         if (myNeighbour.isFavorite()) {
             favoriteButton.setImageResource(R.drawable.ic_star_white_24dp);
         } else {
@@ -82,5 +71,23 @@ public class NeighbourActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setNeighbourIsFavorite(myNeighbour);
+    }
+
+    @OnClick(R.id.floatingActionButton)
+    void setFavoriteButton() {
+        mApiService.toggleIsNeighbourFavorite(myNeighbour);
+        myNeighbour = mApiService.getNeighbourById(myNeighbour.getId());
+        setNeighbourIsFavorite(myNeighbour);
+    }
+
+    public void setMyNeighbour() {
+        myNeighbour = (Neighbour) getIntent().getSerializableExtra(NEIGHBOURS_INFO);
+        Glide.with(this).load(myNeighbour.getAvatarUrl()).into(avatar);
+        nom1.setText(myNeighbour.getName());
+        nom2.setText(myNeighbour.getName());
+        adress.setText(myNeighbour.getAddress());
+        phoneNumber.setText(myNeighbour.getPhoneNumber());
+        aboutMe.setText(myNeighbour.getAboutMe());
+        socialNetwork.setText(getString(R.string.facebook_profile_url, myNeighbour.getName().toLowerCase()));
     }
 }
