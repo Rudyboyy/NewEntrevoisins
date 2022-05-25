@@ -3,4 +3,12 @@
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_neighbour">New neighbour</string>
+    <string name="Name">Nom</string>
+    <string name="Locality">Adresse</string>
+    <string name="Phone_Number">Numéro de téléphone</string>
+    <string name="Social_network">Réseau social</string>
+    <string name="About_me">A propos de moi</string>
+    <string name="Text_about">Je suis fan de randonnée et de cuisine, ici pour rencontrer mes voisins et en faire des amis</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_profile_url">www.facebook.fr/%1$s</string>
 </resources>

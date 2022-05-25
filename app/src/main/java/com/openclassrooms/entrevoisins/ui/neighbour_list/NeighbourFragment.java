@@ -21,26 +21,33 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-
 public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+    private int pageIndex;
+    public static final String EXTRA_PAGE_INDEX = "extra_page_index";
 
 
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int pageIndex) {
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_PAGE_INDEX, pageIndex);
+
         NeighbourFragment fragment = new NeighbourFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getArguments() != null;
+        pageIndex = getArguments().getInt(EXTRA_PAGE_INDEX);
         mApiService = DI.getNeighbourApiService();
     }
 
@@ -59,8 +66,12 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        if (pageIndex == 0) {
+            mNeighbours = mApiService.getNeighbours();
+        } else if (pageIndex == 1) {
+            mNeighbours = mApiService.getFavoriteNeighbour();
+        }
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, getActivity()));
     }
 
     @Override

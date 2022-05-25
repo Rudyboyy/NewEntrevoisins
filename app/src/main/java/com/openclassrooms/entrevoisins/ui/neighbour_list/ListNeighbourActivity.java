@@ -8,12 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.ui.neighbour.NeighbourActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ListNeighbourActivity extends AppCompatActivity {
+
+    public static final String NEIGHBOURS_INFO = "neighbourInfo";
 
     // UI Components
     @BindView(R.id.tabs)
